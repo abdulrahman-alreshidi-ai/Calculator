@@ -1,56 +1,63 @@
-def menu():
-    print("\n" + "=" * 35)
-    print("        Python Calculator")
-    print("=" * 35)
-    print("1. Addition")
-    print("2. Subtraction")
-    print("3. Multiplication")
-    print("4. Division")
-    print("5. Power")
-    print("6. Modulus")
-    print("7. Exit")
+tasks = []
+
+
+def show_menu():
+    print("\n" + "=" * 40)
+    print("           TO-DO LIST")
+    print("=" * 40)
+    print("1. View Tasks")
+    print("2. Add Task")
+    print("3. Remove Task")
+    print("4. Exit")
 
 
 while True:
-    menu()
+    show_menu()
 
-    choice = input("Choose an option (1-7): ")
+    choice = input("Choose an option (1-4): ")
 
-    if choice == "7":
-        print("Thank you for using Calculator.")
+    if choice == "1":
+
+        if len(tasks) == 0:
+            print("\nNo tasks found.")
+
+        else:
+            print("\nYour Tasks:")
+            for index, task in enumerate(tasks, start=1):
+                print(f"{index}. {task}")
+
+    elif choice == "2":
+
+        task = input("Enter a new task: ")
+        tasks.append(task)
+
+        print("Task added successfully.")
+
+    elif choice == "3":
+
+        if len(tasks) == 0:
+            print("No tasks to remove.")
+
+        else:
+
+            for index, task in enumerate(tasks, start=1):
+                print(f"{index}. {task}")
+
+            try:
+                number = int(input("Enter task number: "))
+
+                if 1 <= number <= len(tasks):
+                    removed = tasks.pop(number - 1)
+                    print(f'"{removed}" removed successfully.')
+                else:
+                    print("Invalid task number.")
+
+            except ValueError:
+                print("Please enter a valid number.")
+
+    elif choice == "4":
+        print("Goodbye.")
         break
 
-    if choice not in ["1", "2", "3", "4", "5", "6"]:
-        print("Invalid choice!")
-        continue
-
-    try:
-        num1 = float(input("Enter first number: "))
-        num2 = float(input("Enter second number: "))
-
-        if choice == "1":
-            print(f"Result = {num1 + num2}")
-
-        elif choice == "2":
-            print(f"Result = {num1 - num2}")
-
-        elif choice == "3":
-            print(f"Result = {num1 * num2}")
-
-        elif choice == "4":
-            if num2 == 0:
-                print("Error: Cannot divide by zero.")
-            else:
-                print(f"Result = {num1 / num2}")
-
-        elif choice == "5":
-            print(f"Result = {num1 ** num2}")
-
-        elif choice == "6":
-            if num2 == 0:
-                print("Error: Cannot calculate modulus by zero.")
-            else:
-                print(f"Result = {num1 % num2}")
-
-    except ValueError:
-        print("Please enter valid numbers.")
+    else:
+        print("Invalid choice.")
