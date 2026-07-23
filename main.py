@@ -1,6 +1,5 @@
-
 def menu():
-    print("=" * 35)
+    print("\n" + "=" * 35)
     print("        Python Calculator")
     print("=" * 35)
     print("1. Addition")
@@ -12,4 +11,13 @@ def menu():
     print("7. Exit")
 
 
-menu()
+while True:
+    menu()
+
+    choice = input("Choose an option (1-7): ")
+
+    if choice == "7":
+        print("Thank you for using Calculator.")
+        break
+
+    print(f"You selected option {choice}")
