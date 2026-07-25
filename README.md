@@ -1,20 +1,20 @@
-# Contact Book
+# Password Generator
 
-A Contact Book application built with Python.
+A simple Python application that generates secure random passwords.
 
 ## Features
 
-- Add Contact
-- View Contacts
-- Search Contact
-- Delete Contact
-- Save Contacts using JSON
-- Load Contacts Automatically
+- Generate random passwords
+- User chooses password length
+- Includes:
+  - Uppercase letters
+  - Lowercase letters
+  - Numbers
+  - Symbols
 
 ## Technologies
 
 - Python 3
-- JSON
 
 ## Author
 
