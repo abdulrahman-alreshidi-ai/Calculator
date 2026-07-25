@@ -1,101 +1,34 @@
-import json
-import os
+import random
+import string
 
-FILE_NAME = "contacts.json"
-
-
-def load_contacts():
-    if not os.path.exists(FILE_NAME):
-        return []
-
-    with open(FILE_NAME, "r") as file:
-        return json.load(file)
-
-
-def save_contacts(contacts):
-    with open(FILE_NAME, "w") as file:
-        json.dump(contacts, file, indent=4)
-
-
-contacts = load_contacts()
-
+print("=" * 40)
+print("      PASSWORD GENERATOR")
+print("=" * 40)
 
 while True:
 
-    print("\n========== Contact Book ==========")
-    print("1. View Contacts")
-    print("2. Add Contact")
-    print("3. Search Contact")
-    print("4. Delete Contact")
-    print("5. Exit")
+    try:
+        length = int(input("Enter password length (8-64): "))
 
-    choice = input("Choose: ")
+        if length < 8 or length > 64:
+            print("Length must be between 8 and 64.")
+            continue
 
-    if choice == "1":
-
-        if not contacts:
-            print("No contacts found.")
-
-        else:
-            print("\nContacts:")
-            for contact in contacts:
-                print(f"Name : {contact['name']}")
-                print(f"Phone: {contact['phone']}")
-                print("-" * 25)
-
-    elif choice == "2":
-
-        name = input("Name : ")
-        phone = input("Phone: ")
-
-        contacts.append({
-            "name": name,
-            "phone": phone
-        })
-
-        save_contacts(contacts)
-
-        print("Contact added successfully.")
-
-    elif choice == "3":
-
-        keyword = input("Enter name: ").lower()
-
-        found = False
-
-        for contact in contacts:
-
-            if keyword in contact["name"].lower():
-
-                print(f"\nName : {contact['name']}")
-                print(f"Phone: {contact['phone']}")
-                found = True
-
-        if not found:
-            print("Contact not found.")
-
-    elif choice == "4":
-
-        name = input("Enter name to delete: ").lower()
-
-        deleted = False
-
-        for contact in contacts:
-
-            if contact["name"].lower() == name:
-                contacts.remove(contact)
-                save_contacts(contacts)
-                deleted = True
-                print("Contact deleted.")
-                break
-
-        if not deleted:
-            print("Contact not found.")
-
-    elif choice == "5":
-
-        print("Goodbye.")
         break
 
-    else:
-        print("Invalid choice.")
+    except ValueError:
+        print("Please enter a valid number.")
+
+characters = (
+    string.ascii_letters +
+    string.digits +
+    string.punctuation
+)
+
+password = ""
+
+for _ in range(length):
+    password += random.choice(characters)
+
+print("\nGenerated Password:")
+print(password)
