@@ -1,105 +1,50 @@
-import json
-import os
-
-FILE_NAME = "expenses.json"
+import random
+import string
 
 
-def load_expenses():
-    if os.path.exists(FILE_NAME):
-        with open(FILE_NAME, "r") as file:
-            return json.load(file)
-    return []
+def generate_password(length):
+
+    characters = (
+        string.ascii_uppercase +
+        string.ascii_lowercase +
+        string.digits +
+        string.punctuation
+    )
+
+    password = ""
+
+    for _ in range(length):
+        password += random.choice(characters)
+
+    return password
 
 
-def save_expenses(expenses):
-    with open(FILE_NAME, "w") as file:
-        json.dump(expenses, file, indent=4)
-
-
-expenses = load_expenses()
+print("=" * 40)
+print("      PASSWORD GENERATOR")
+print("=" * 40)
 
 while True:
 
-    print("\n========== Expense Tracker ==========")
-    print("1. View Expenses")
-    print("2. Add Expense")
-    print("3. Delete Expense")
-    print("4. Total Expenses")
-    print("5. Exit")
+    try:
 
-    choice = input("Choose: ")
+        length = int(input("Enter password length (8-64): "))
 
-    if choice == "1":
+        if length < 8 or length > 64:
+            print("Password length must be between 8 and 64.")
+            continue
 
-        if not expenses:
-            print("No expenses found.")
+        password = generate_password(length)
 
-        else:
-            print("\nExpenses")
-            print("-" * 35)
+        print("\nGenerated Password")
+        print("-" * 40)
+        print(password)
+        print("-" * 40)
 
-            for index, expense in enumerate(expenses, start=1):
-                print(f"{index}. {expense['title']} - ${expense['amount']}")
+        again = input("\nGenerate another password? (y/n): ").lower()
 
-    elif choice == "2":
+        if again != "y":
+            print("Goodbye.")
+            break
 
-        title = input("Expense Title: ")
-
-        try:
-            amount = float(input("Amount: "))
-
-            expenses.append({
-                "title": title,
-                "amount": amount
-            })
-
-            save_expenses(expenses)
-
-            print("Expense added successfully.")
-
-        except ValueError:
-            print("Invalid amount.")
-
-    elif choice == "3":
-
-        if not expenses:
-            print("No expenses to delete.")
-
-        else:
-
-            for index, expense in enumerate(expenses, start=1):
-                print(f"{index}. {expense['title']}")
-
-            try:
-                number = int(input("Expense Number: "))
-
-                if 1 <= number <= len(expenses):
-
-                    removed = expenses.pop(number - 1)
-
-                    save_expenses(expenses)
-
-                    print(f"{removed['title']} deleted.")
-
-                else:
-                    print("Invalid number.")
-
-            except ValueError:
-                print("Invalid input.")
-
-    elif choice == "4":
-
-        total = 0
-
-        for expense in expenses:
-            total += expense["amount"]
-
-        print(f"\nTotal Expenses = ${total:.2f}")
-
-    elif choice == "5":
-
-        print("Goodbye.")
-        break
-
-    else:
-        print("Invalid choice.")
+    except ValueError:
+        print("Please enter a valid number.")
