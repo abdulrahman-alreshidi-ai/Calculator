@@ -1,20 +1,25 @@
 # Password Generator
 
-A simple Python application that generates secure random passwords.
+A simple Python application that generates strong random passwords.
 
 ## Features
 
-- Generate random passwords
-- User chooses password length
-- Includes:
-  - Uppercase letters
-  - Lowercase letters
-  - Numbers
-  - Symbols
+- Generate secure passwords
+- User selects password length
+- Includes uppercase letters
+- Includes lowercase letters
+- Includes numbers
+- Includes special characters
 
 ## Technologies
 
 - Python 3
+
+## Run
+
+```bash
+python main.py
+```
 
 ## Author
 
