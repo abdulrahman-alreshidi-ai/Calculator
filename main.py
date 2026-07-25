@@ -1,61 +1,99 @@
-tasks = []
+import json
+import os
+
+FILE_NAME = "contacts.json"
 
 
-def show_menu():
-    print("\n" + "=" * 40)
-    print("           TO-DO LIST")
-    print("=" * 40)
-    print("1. View Tasks")
-    print("2. Add Task")
-    print("3. Remove Task")
-    print("4. Exit")
+def load_contacts():
+    if not os.path.exists(FILE_NAME):
+        return []
+
+    with open(FILE_NAME, "r") as file:
+        return json.load(file)
+
+
+def save_contacts(contacts):
+    with open(FILE_NAME, "w") as file:
+        json.dump(contacts, file, indent=4)
+
+
+contacts = load_contacts()
 
 
 while True:
-    show_menu()
 
-    choice = input("Choose an option (1-4): ")
+    print("\n========== Contact Book ==========")
+    print("1. View Contacts")
+    print("2. Add Contact")
+    print("3. Search Contact")
+    print("4. Delete Contact")
+    print("5. Exit")
+
+    choice = input("Choose: ")
 
     if choice == "1":
 
-        if len(tasks) == 0:
-            print("\nNo tasks found.")
+        if not contacts:
+            print("No contacts found.")
 
         else:
-            print("\nYour Tasks:")
-            for index, task in enumerate(tasks, start=1):
-                print(f"{index}. {task}")
+            print("\nContacts:")
+            for contact in contacts:
+                print(f"Name : {contact['name']}")
+                print(f"Phone: {contact['phone']}")
+                print("-" * 25)
 
     elif choice == "2":
 
-        task = input("Enter a new task: ")
-        tasks.append(task)
+        name = input("Name : ")
+        phone = input("Phone: ")
 
-        print("Task added successfully.")
+        contacts.append({
+            "name": name,
+            "phone": phone
+        })
+
+        save_contacts(contacts)
+
+        print("Contact added successfully.")
 
     elif choice == "3":
 
-        if len(tasks) == 0:
-            print("No tasks to remove.")
+        keyword = input("Enter name: ").lower()
 
-        else:
+        found = False
 
-            for index, task in enumerate(tasks, start=1):
-                print(f"{index}. {task}")
+        for contact in contacts:
 
-            try:
-                number = int(input("Enter task number: "))
+            if keyword in contact["name"].lower():
 
-                if 1 <= number <= len(tasks):
-                    removed = tasks.pop(number - 1)
-                    print(f'"{removed}" removed successfully.')
-                else:
-                    print("Invalid task number.")
+                print(f"\nName : {contact['name']}")
+                print(f"Phone: {contact['phone']}")
+                found = True
 
-            except ValueError:
-                print("Please enter a valid number.")
+        if not found:
+            print("Contact not found.")
 
     elif choice == "4":
+
+        name = input("Enter name to delete: ").lower()
+
+        deleted = False
+
+        for contact in contacts:
+
+            if contact["name"].lower() == name:
+                contacts.remove(contact)
+                save_contacts(contacts)
+                deleted = True
+                print("Contact deleted.")
+                break
+
+        if not deleted:
+            print("Contact not found.")
+
+    elif choice == "5":
+
         print("Goodbye.")
         break
 
