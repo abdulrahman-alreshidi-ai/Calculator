@@ -1,18 +1,20 @@
-# Todo List
+# Contact Book
 
-A simple command-line To-Do List application built with Python.
+A Contact Book application built with Python.
 
 ## Features
 
-- Add tasks
-- View tasks
-- Remove tasks
-- Interactive menu
-- Input validation
+- Add Contact
+- View Contacts
+- Search Contact
+- Delete Contact
+- Save Contacts using JSON
+- Load Contacts Automatically
 
 ## Technologies
 
 - Python 3
+- JSON
 
 ## Author
 
